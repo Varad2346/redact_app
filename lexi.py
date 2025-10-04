@@ -107,12 +107,12 @@ def upload_page():
             st.session_state.uploaded_file_bytes = None
             st.session_state.file_name = None
             st.warning("Upload cancelled. You can now upload a new file.")
-            st.experimental_rerun()
+            st.rerun()
     with action_cols[1]:
         if st.button("Proceed to Redact", type="primary", use_container_width=True):
             if st.session_state.uploaded_file_bytes:
                 st.session_state.page = 'redact'
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Please upload a PDF file first before proceeding.")
 
@@ -124,14 +124,14 @@ def redact_page():
         st.error("No file found. Please go back and upload a file.")
         if st.button("Back to Upload"):
             st.session_state.page = 'upload'
-            st.experimental_rerun()
+            st.rerun()
         return
 
     pdf_images = convert_pdf_to_images(st.session_state.uploaded_file_bytes)
     if not pdf_images:
         if st.button("Back to Upload"):
             st.session_state.page = 'upload'
-            st.experimental_rerun()
+            st.rerun()
         return
 
     # Layout
@@ -158,7 +158,7 @@ def redact_page():
             st.session_state.page = 'upload'
             st.session_state.uploaded_file_bytes = None
             st.session_state.file_name = None
-            st.experimental_rerun()
+            st.rerun()
     with final_action_cols[2]:
         if st.button("Confirm and Redact", type="primary", use_container_width=True):
             options = {
@@ -172,7 +172,7 @@ def redact_page():
             if redacted_pdf:
                 st.session_state.redacted_file_bytes = redacted_pdf
                 st.session_state.page = 'download'
-                st.experimental_rerun()
+                st.rerun()
 
 def download_page():
     st.title("Redaction Complete")
@@ -194,7 +194,7 @@ def download_page():
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.session_state.page = 'upload' # Ensure page is set back to upload
-        st.experimental_rerun()
+        st.rerun()
 
 
 if st.session_state.page == 'upload':
