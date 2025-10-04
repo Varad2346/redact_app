@@ -4,7 +4,7 @@ from PIL import Image
 import io
 import re
 
-st.set_page_config(layout="centered", page_title="LexiRedact")
+st.set_page_config(layout="wide", page_title="LexiRedact")
 
 if 'page' not in st.session_state:
     st.session_state.page = 'upload'
